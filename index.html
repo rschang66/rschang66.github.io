@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>張瑞雄教授網站 | Prof. Ruay-Shiung Chang's Website</title>
+
+  <!-- SEO: Basic (Chinese) -->
+  <meta name="description" content="張瑞雄教授（Prof. Ruay-Shiung Chang）個人網站。國立台北商業大學榮譽講座教授，專長人工智慧、雲端計算、社群網路、物聯網。學術著作、出版書籍、媒體專欄文章總覽。">
+  <meta name="keywords" content="張瑞雄, Ruay-Shiung Chang, 國立台北商業大學, NTUB, 人工智慧, AI, 雲端計算, 社群網路, 物聯網, IoT, 榮譽講座教授, STEAM教育, 元宇宙的讀書人, AI萬花筒, AI探索未來的智慧之旅">
+  <!-- SEO: Basic (English) -->
+  <meta name="description" lang="en" content="Personal website of Prof. Ruay-Shiung Chang (張瑞雄), Honorary Chair Professor at National Taipei University of Business (NTUB), Taiwan. Research interests: Artificial Intelligence, Cloud Computing, Social Networks, Internet of Things. Publications, books, and media columns.">
+  <meta name="keywords" lang="en" content="Ruay-Shiung Chang, Prof. Chang, National Taipei University of Business, NTUB, Taiwan, Artificial Intelligence, AI, Cloud Computing, Social Networks, Internet of Things, IoT, computer science, professor, eLFA, STEAM education">
+  <meta name="author" content="Prof. Ruay-Shiung Chang (張瑞雄)">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://ruayshiungchang.github.io/">
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Prof. Ruay-Shiung Chang | 張瑞雄教授">
+  <meta property="og:description" content="Honorary Chair Professor, National Taipei University of Business (NTUB), Taiwan. AI, Cloud Computing, Social Networks, IoT. Academic publications and media columns.">
+  <meta property="og:image" content="photo.jpg">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- SEO: Twitter/X Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Prof. Ruay-Shiung Chang | 張瑞雄教授">
+  <meta name="twitter:description" content="Honorary Chair Professor, National Taipei University of Business (NTUB), Taiwan. AI, Cloud Computing, Social Networks, IoT.">
+  <meta name="twitter:image" content="photo.jpg">
+
+  <!-- SEO: Structured Data (Google Knowledge Panel) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ruay-Shiung Chang",
+    "alternateName": ["張瑞雄", "Chang Ruay-Shiung"],
+    "jobTitle": "Honorary Chair Professor",
+    "description": "Honorary Chair Professor at National Taipei University of Business (NTUB), Taiwan. Research interests include Artificial Intelligence, Cloud Computing, Social Networks, and Internet of Things. Author of multiple books and columnist in major Taiwan media.",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "National Taipei University of Business",
+      "alternateName": "國立台北商業大學",
+      "url": "https://www.ntub.edu.tw"
+    },
+    "email": "rschang@ntub.edu.tw",
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Cloud Computing",
+      "Social Networks",
+      "Internet of Things",
+      "STEAM Education",
+      "人工智慧",
+      "雲端計算",
+      "社群網路",
+      "物聯網"
+    ],
+    "alumniOf": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "National Tsing Hua University",
+        "alternateName": "國立清華大學"
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "National Yang Ming Chiao Tung University",
+        "alternateName": "國立交通大學"
+      }
+    ],
+    "nationality": "Taiwanese",
+    "worksFor": {
+      "@type": "CollegeOrUniversity",
+      "name": "National Taipei University of Business"
+    },
+    "sameAs": [
+      "https://www.gvm.com.tw/author/6083",
+      "https://www.storm.mg/author/張瑞雄"
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --primary: #1a3a5c;
+      --accent: #c8932a;
+      --light: #f5f7fa;
+      --text: #2d2d2d;
+      --muted: #6b7280;
+      --border: #dde3ec;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Serif TC", "思源宋體", Georgia, serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    nav ul li a {
+      display: block;
+      padding: .75rem 1rem;
+      color: rgba(255,255,255,.85);
+      text-decoration: none;
+      font-size: .9rem;
+      font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+      letter-spacing: .05em;
+      transition: color .2s;
+    }
+    nav ul li a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    header.hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #2d5986 100%);
+      color: #fff;
+      padding: 4rem 2rem 3rem;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-photo {
+      flex-shrink: 0;
+      width: 180px;
+      height: 220px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+    .hero-photo-placeholder {
+      flex-shrink: 0;
+      width: 180px;
+      height: 220px;
+      border-radius: 8px;
+      border: 4px solid var(--accent);
+      background: rgba(255,255,255,.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      color: rgba(255,255,255,.6);
+      font-size: .8rem;
+      text-align: center;
+    }
+    .hero-photo-placeholder svg { opacity: .5; }
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+      letter-spacing: .05em;
+    }
+    .hero-text h2 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 1rem;
+    }
+    .hero-text .tagline {
+      font-size: .95rem;
+      color: rgba(255,255,255,.65);
+      font-style: italic;
+      max-width: 560px;
+    }
+    .hero-text .contact {
+      margin-top: 1.2rem;
+      font-size: .9rem;
+      color: rgba(255,255,255,.7);
+    }
+    .hero-text .contact a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── SECTIONS ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    section { margin-bottom: 3.5rem; }
+
+    section h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      border-left: 5px solid var(--accent);
+      padding-left: .85rem;
+      margin-bottom: 1.4rem;
+      font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+      letter-spacing: .08em;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      border: 1px solid var(--border);
+    }
+
+    /* ── TABLE LAYOUT ── */
+    table.timeline {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table.timeline td {
+      padding: .55rem .5rem;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      font-size: .95rem;
+    }
+    table.timeline td:first-child {
+      white-space: nowrap;
+      color: var(--muted);
+      width: 200px;
+      font-variant-numeric: tabular-nums;
+    }
+    table.timeline tr:last-child td { border-bottom: none; }
+
+    /* ── TAGS ── */
+    .tag {
+      display: inline-block;
+      background: #e8f0fb;
+      color: var(--primary);
+      border-radius: 20px;
+      padding: .3rem .9rem;
+      margin: .3rem .25rem;
+      font-size: .9rem;
+      font-family: "Noto Sans TC", sans-serif;
+    }
+
+    /* ── ARTICLE LIST ── */
+    .article-list { list-style: none; }
+    .article-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .5rem 1.5rem;
+      padding: .8rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+      font-size: .95rem;
+    }
+    .article-list li:last-child { border-bottom: none; }
+    .article-list li a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .article-list li a:hover { text-decoration: underline; color: var(--accent); }
+    .article-list li .meta {
+      text-align: right;
+      color: var(--muted);
+      font-size: .82rem;
+      white-space: nowrap;
+    }
+    .article-list li .source {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    /* ── PUB LIST ── */
+    .pub-list { list-style: none; }
+    .pub-list li {
+      padding: .7rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+    .pub-list li:last-child { border-bottom: none; }
+    .pub-list .pub-year {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: .75rem;
+      border-radius: 4px;
+      padding: .1rem .5rem;
+      margin-right: .4rem;
+      vertical-align: middle;
+      font-family: "Noto Sans TC", sans-serif;
+    }
+
+    /* ── AWARDS ── */
+    .award-list { list-style: none; }
+    .award-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .award-list li:last-child { border-bottom: none; }
+    .award-year {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      padding: .15rem .65rem;
+      font-size: .85rem;
+      flex-shrink: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      font-weight: 700;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--primary);
+      color: rgba(255,255,255,.55);
+      font-size: .85rem;
+      font-family: "Noto Sans TC", sans-serif;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .hero-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .hero-text h1 { font-size: 1.7rem; }
+      table.timeline td:first-child { width: 130px; font-size: .85rem; }
+      .article-list li { grid-template-columns: 1fr; }
+      .article-list li .meta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <ul>
+    <li><a href="#about">簡介</a></li>
+    <li><a href="#education">學歷</a></li>
+    <li><a href="#experience">經歷</a></li>
+    <li><a href="#current">現職</a></li>
+    <li><a href="#awards">榮譽</a></li>
+    <li><a href="#research">研究領域</a></li>
+    <li><a href="#publications">學術著作</a></li>
+    <li><a href="#books">出版書籍</a></li>
+    <li><a href="#media">媒體文章</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <img
+      class="hero-photo"
+      src="photo.jpg"
+      alt="張瑞雄教授"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    >
+    <div class="hero-photo-placeholder" style="display:none;">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span>請將個人照片<br>命名為 photo.jpg<br>置於同目錄</span>
+    </div>
+
+    <div class="hero-text">
+      <h1>張瑞雄 教授</h1>
+      <h2>Prof. Ruay-Shiung Chang</h2>
+      <p class="tagline">「風聲、雨聲、讀書聲，聲聲入耳；家事、國事、天下事，事事關心。」</p>
+      <p class="contact">
+        ✉ <a href="mailto:rschang@ntub.edu.tw">rschang@ntub.edu.tw</a>
+      </p>
+      <div style="margin-top:1rem; display:inline-block; text-align:center;">
+        <img src="linecode.jpg" alt="Line QR Code" style="width:90px; height:90px; border-radius:6px; border:2px solid rgba(255,255,255,.4); display:block;"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div style="display:none; width:90px; height:90px; background:rgba(255,255,255,.15); border-radius:6px; line-height:90px; font-size:.75rem; color:rgba(255,255,255,.6);">Line QR</div>
+        <span style="display:block; margin-top:.3rem; font-size:.8rem; color:rgba(255,255,255,.75); letter-spacing:.05em;">Line</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>個人簡介</h2>
+    <div class="card">
+      <p>張瑞雄教授於1980年自國立臺灣大學電機工程學系畢業，1988年取得國立清華大學資訊與決策科學研究所博士學位。歷任中山科學研究院研究科學家、國立臺灣科技大學教授、國立東華大學副校長、台灣觀光學院校長，並於2014年至2022年間擔任國立臺北商業大學校長，任內致力將資訊與通訊科技引入商業教育，使北商大躋身臺灣頂尖技職大學之列。</p>
+      <br>
+      <p>張教授研究領域涵蓋人工智慧、雲端計算與社群網路，曾指導超過50名碩士生及10名博士生，並在國際期刊與會議上發表眾多論文。現任台北商業大學榮譽講座教授，同時擔任叡揚資訊顧問及多項公私部門諮詢職務，並長期為遠見雜誌、梅花新聞網撰寫科技評論專欄。</p>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <h2>學歷 Education</h2>
+    <div class="card">
+      <table class="timeline">
+        <tr>
+          <td>1983 – 1988</td>
+          <td>國立清華大學 計算機管理決策研究所 <strong>博士</strong></td>
+        </tr>
+        <tr>
+          <td>1976 – 1980</td>
+          <td>國立台灣大學 電機工程學系 <strong>學士</strong></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <h2>經歷 Experience</h2>
+    <div class="card">
+      <table class="timeline">
+        <tr>
+          <td>2014/4 – 2022/4</td>
+          <td>國立台北商業大學 <strong>校長</strong></td>
+        </tr>
+        <tr>
+          <td>2012/8 – 2014/3</td>
+          <td>台灣觀光學院 <strong>校長</strong></td>
+        </tr>
+        <tr>
+          <td>2006/2 – 2012/1</td>
+          <td>國立東華大學 教授兼 <strong>副校長</strong></td>
+        </tr>
+        <tr>
+          <td>2002/2 – 2006/1</td>
+          <td>國立東華大學 教授兼 <strong>教務長</strong></td>
+        </tr>
+        <tr>
+          <td>1999/8 – 2002/1</td>
+          <td>國立東華大學 教授兼 <strong>學務長</strong></td>
+        </tr>
+        <tr>
+          <td>1998/8 – 2001/7</td>
+          <td>國立東華大學 教授兼 <strong>資工系系主任</strong></td>
+        </tr>
+        <tr>
+          <td>1998/2 – 1998/7</td>
+          <td>國立台灣科技大學 <strong>教授</strong></td>
+        </tr>
+        <tr>
+          <td>1992/4 – 1998/1</td>
+          <td>國立台灣科技大學 <strong>副教授</strong></td>
+        </tr>
+        <tr>
+          <td>1988/4 – 1992/3</td>
+          <td>中山科學研究院 <strong>技正</strong>（研發 C³I 系統）</td>
+        </tr>
+        <tr>
+          <td>1982/7 – 1983/7</td>
+          <td>中國鋼鐵公司 <strong>工程師</strong></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- CURRENT -->
+  <section id="current">
+    <h2>現職 Current Positions</h2>
+    <div class="card">
+      <table class="timeline">
+        <tr>
+          <td>2022/4 – 迄今</td>
+          <td>國立台北商業大學 <strong>榮譽講座教授</strong></td>
+        </tr>
+        <tr>
+          <td>現任</td>
+          <td>叡揚資訊股份有限公司 <strong>顧問</strong></td>
+        </tr>
+        <tr>
+          <td>現任</td>
+          <td>Vietnam Dai Nam University, Faculty of Information Technology &nbsp;<strong>Advisor</strong></td>
+        </tr>
+        <tr>
+          <td>現任</td>
+          <td>BSSS Institute of Advanced Studies, India &nbsp;<strong>Advisor</strong></td>
+        </tr>
+        <tr>
+          <td>2019 – 迄今</td>
+          <td>eLFA (eLearning Forum Asia) <strong>Board of Directors</strong></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section id="awards">
+    <h2>榮譽 Awards &amp; Honors</h2>
+    <div class="card">
+      <ul class="award-list">
+        <li><span class="award-year">2021</span>龍騰基金會 典範人物獎</li>
+        <li><span class="award-year">2020</span>中華民國資訊學會 李國鼎會士獎</li>
+        <li><span class="award-year">2017</span>星雲教育基金會 典範教師獎</li>
+        <li><span class="award-year">2016</span>奧地利史懷哲基金會 成就獎</li>
+        <li><span class="award-year">2016</span>美國光點基金會總統終身成就獎</li>
+        <li><span class="award-year">2009</span>資訊月委員會 傑出資訊人才獎</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <h2>研究領域 Research Interests</h2>
+    <div class="card">
+      <span class="tag">🤖 人工智慧 Artificial Intelligence</span>
+      <span class="tag">☁️ 雲端計算 Cloud Computing</span>
+      <span class="tag">🌐 社群網路 Social Networks</span>
+      <span class="tag">💡 物聯網 Internet of Things</span>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <h2>學術著作 Selected Publications</h2>
+    <div class="card">
+      <ul class="pub-list">
+        <li>
+          <span class="pub-year">2021</span>
+          Hung, L.-P., Chen, C.-L., <strong>Chang, R.-S.</strong>, &amp; Hsu, Y.-C. (2021). Building a Smart Rehabilitation Delivery Platform with Hybrid Matching Algorithm Based on Long-term Care Plan in Taiwan. <em>International Journal of Ad Hoc and Ubiquitous Computing</em>, 37(2), 85–97.
+        </li>
+        <li>
+          <span class="pub-year">2021</span>
+          Tsai, C.-W., Yang, C.-W., Lin, J., Chang, Y.-C., &amp; <strong>Chang, R.-S.</strong> (2021). Quantum Key Distribution Networks: Challenges and Future Research Issues in Security. <em>Applied Sciences</em>, 11(9), 3767–3781.
+        </li>
+        <li>
+          <span class="pub-year">2020</span>
+          Pai, K.-J., <strong>Chang, R.-S.</strong>, Wu, R.-Y., &amp; Chang, J.-M. (2020). Three completely independent spanning trees of crossed cubes with application to secure-protection routing. <em>Information Sciences</em>, 541, 516–530.
+        </li>
+        <li>
+          <span class="pub-year">2020</span>
+          Pai, K.-J., <strong>Chang, R.-S.</strong>, &amp; Chang, J.-M. (2020). Constructing dual-CISTs of pancake graphs and performance assessment of protection routings on some Cayley networks. <em>The Journal of Supercomputing</em>.
+        </li>
+        <li>
+          <span class="pub-year">2020</span>
+          Pai, K.-J., <strong>Chang, R.-S.</strong>, &amp; Chang, J.-M. (2020). A well-equalized 3-CIST partition of alternating group graphs. <em>Information Processing Letters</em>, 155, 105874.
+        </li>
+        <li>
+          <span class="pub-year">2019</span>
+          Yang, Y.-X., Pai, K.-J., <strong>Chang, R.-S.</strong>, &amp; Chang, J.-M. (2019). Constructing Two Completely Independent Spanning Trees in Balanced Hypercubes. <em>IEICE Transactions on Information and Systems</em>, E102.D(12), 2409–2412.
+        </li>
+        <li>
+          <span class="pub-year">2019</span>
+          Pai, K.-J., <strong>Chang, R.-S.</strong>, Wu, R.-Y., &amp; Chang, J.-M. (2019). A two-stages tree-searching algorithm for finding three completely independent spanning trees. <em>Theoretical Computer Science</em>, 784, 65–74.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BOOKS -->
+  <section id="books">
+    <h2>出版書籍 Books</h2>
+
+    <!-- 三本中文科普書 -->
+    <div class="card" style="margin-bottom:1.5rem;">
+      <p style="font-weight:600; margin-bottom:1.2rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">中文科普著作</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem;">
+
+        <!-- Book 1 -->
+        <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#fafbfc; display:flex; flex-direction:column;">
+          <a href="https://www.books.com.tw/products/0010923793" target="_blank" rel="noopener" style="display:block; background:#eef2f7; text-align:center; padding:.75rem;">
+            <img src="book1.jpg" alt="元宇宙的讀書人" style="width:auto; max-width:100%; height:auto; max-height:360px; display:inline-block;"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none; height:220px; background:linear-gradient(135deg,#1a3a5c,#2d5986); align-items:center; justify-content:center; border-radius:6px;">
+              <span style="color:#fff; font-size:1.1rem; font-weight:700; text-align:center; padding:1rem;">元宇宙的讀書人</span>
+            </div>
+          </a>
+          <div style="padding:1rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.05rem; color:var(--primary); margin-bottom:.25rem;">《元宇宙的讀書人》</h3>
+            <p style="font-size:.82rem; color:var(--muted); margin-bottom:.6rem;">科技、數位、人工智慧的開源活水｜新陸書局｜2022</p>
+            <p style="font-size:.88rem; line-height:1.7; color:var(--text); flex:1;">收錄自1995年迄今逾27年的百餘篇資訊科技評論，涵蓋數位科技、人工智慧與元宇宙等議題，融合科學思維與人文關懷，是作者對STEAM教育長期推動的集大成之作。</p>
+            <a href="https://www.books.com.tw/products/0010923793" target="_blank" rel="noopener" style="display:inline-block;margin-top:.8rem;font-size:.8rem;background:var(--primary);color:#fff;padding:.3rem .8rem;border-radius:4px;text-decoration:none;">博客來購書 →</a>
+          </div>
+        </div>
+
+        <!-- Book 2 -->
+        <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#fafbfc; display:flex; flex-direction:column;">
+          <a href="https://www.books.com.tw/products/0011028280" target="_blank" rel="noopener" style="display:block; background:#eef2f7; text-align:center; padding:.75rem;">
+            <img src="book2.jpg" alt="AI萬花筒" style="width:auto; max-width:100%; height:auto; max-height:360px; display:inline-block;"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none; height:220px; background:linear-gradient(135deg,#0d1b3e,#2463a8); align-items:center; justify-content:center; border-radius:6px;">
+              <span style="color:#fff; font-size:1.1rem; font-weight:700; text-align:center; padding:1rem;">AI萬花筒</span>
+            </div>
+          </a>
+          <div style="padding:1rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.05rem; color:var(--primary); margin-bottom:.25rem;">《AI萬花筒》</h3>
+            <p style="font-size:.82rem; color:var(--muted); margin-bottom:.6rem;">張瑞雄博士 著｜2025年7月</p>
+            <p style="font-size:.88rem; line-height:1.7; color:var(--text); flex:1;">深入淺出剖析人工智慧如何影響教育、政治、金融、醫療、生態與社會倫理。強調面對快速演化的AI時代，不僅要看見科技「如何做」，更需理解它「為何而做」，為社會大眾建立一雙看穿AI迷霧、看見轉機的眼睛。</p>
+            <a href="https://www.books.com.tw/products/0011028280" target="_blank" rel="noopener" style="display:inline-block;margin-top:.8rem;font-size:.8rem;background:var(--primary);color:#fff;padding:.3rem .8rem;border-radius:4px;text-decoration:none;">博客來購書 →</a>
+          </div>
+        </div>
+
+        <!-- Book 3 -->
+        <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#fafbfc; display:flex; flex-direction:column;">
+          <a href="https://www.books.com.tw/products/0010959530" target="_blank" rel="noopener" style="display:block; background:#eef2f7; text-align:center; padding:.75rem;">
+            <img src="book3.jpg" alt="AI探索未來的智慧之旅" style="width:auto; max-width:100%; height:auto; max-height:360px; display:inline-block;"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none; height:220px; background:linear-gradient(135deg,#1a1a2e,#16213e); align-items:center; justify-content:center; border-radius:6px;">
+              <span style="color:#fff; font-size:1.05rem; font-weight:700; text-align:center; padding:1rem;">AI：探索未來的智慧之旅</span>
+            </div>
+          </a>
+          <div style="padding:1rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.05rem; color:var(--primary); margin-bottom:.25rem;">《AI：探索未來的智慧之旅》</h3>
+            <p style="font-size:.82rem; color:var(--muted); margin-bottom:.6rem;">張瑞雄教授 著｜新陸書局</p>
+            <p style="font-size:.88rem; line-height:1.7; color:var(--text); flex:1;">全書分三部分：AI基礎（機器學習、深度學習、生成式AI、通用人工智慧）、AI在各領域的應用，以及AI的未來展望，提供讀者全面深入認識AI的基本概念、應用場域與發展趨勢。</p>
+            <a href="https://www.books.com.tw/products/0010959530" target="_blank" rel="noopener" style="display:inline-block;margin-top:.8rem;font-size:.8rem;background:var(--primary);color:#fff;padding:.3rem .8rem;border-radius:4px;text-decoration:none;">博客來購書 →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 英文編輯專書 -->
+    <div class="card">
+      <p style="font-weight:600; margin-bottom:.8rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">英文編輯專書 Edited Books</p>
+      <ul class="pub-list">
+        <li>
+          <span class="pub-year">2010</span>
+          Kim, T.-H., Stoica, A., &amp; <strong>Chang, R.-S.</strong> (Eds.). <em>Security-Enriched Urban Computing and Smart Grid</em> (CCIS 78). Springer. ISBN 978-3-642-16444-6.
+        </li>
+        <li>
+          <span class="pub-year">2010</span>
+          Tomar, G.S., <strong>Chang, R.-S.</strong>, Gervasi, O., Kim, T.-H., &amp; Bandyopadhyay, S.K. (Eds.). <em>Advanced Computer Science and Information Technology</em> (CCIS 74). Springer. ISBN 978-3-642-13346-6.
+        </li>
+        <li>
+          <span class="pub-year">2010</span>
+          Bellavista, P., <strong>Chang, R.-S.</strong>, Chao, H.-C., Lin, S.-F., &amp; Sloot, P.M.A. (Eds.). <em>Advances in Grid and Pervasive Computing</em> (LNCS 6104). Springer. ISBN 978-3-642-13067-0.
+        </li>
+      </ul>
+      <br>
+      <p style="font-weight:600; margin-bottom:.8rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">書中專章 Book Chapters</p>
+      <ul class="pub-list">
+        <li>
+          <span class="pub-year">2010</span>
+          <strong>Chang, R.-S.</strong> Social Networks: Research and Applications. In <em>Future Generation Information Technology</em> (LNCS 6485). Springer.
+        </li>
+        <li>
+          <span class="pub-year">2010</span>
+          <strong>Chang, R.-S.</strong> &amp; Wang, S.-H. Deployment Strategies for Wireless Sensor Networks. In <em>Handbook of Research on Developments and Trends in Wireless Sensor Networks</em>. IGI Global.
+        </li>
+        <li>
+          <span class="pub-year">2010</span>
+          <strong>Chang, R.-S.</strong> &amp; Lin, C.-F. Data Replications in Data Grids. In <em>Recent Developments in Grid Technology and Applications</em>. Nova Science.
+        </li>
+        <li>
+          <span class="pub-year">2009</span>
+          <strong>Chang, R.-S.</strong> Computer Science: Where Is the Next Frontier? <em>LNCS 5899</em>, pp. 1–6.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MEDIA -->
+  <section id="media">
+    <h2>選錄媒體發表文章（2026）Selected Media Articles</h2>
+    <div class="card">
+
+      <!-- 遠見雜誌 -->
+      <p style="font-weight:600; margin:.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">遠見雜誌（Global Views Monthly）</p>
+      <ul class="article-list">
+        <li><div><a href="https://www.gvm.com.tw/article/130911" target="_blank" rel="noopener">馬斯克成首位兆元富豪，他值得這個身價嗎？</a><div class="source">遠見雜誌</div></div><div class="meta">2026-06-17</div></li>
+        <li><div><a href="https://www.gvm.com.tw/article/130626" target="_blank" rel="noopener">AI治理成全球焦點！教宗示警：人性不能外包給科技</a><div class="source">遠見雜誌</div></div><div class="meta">2026-06-04</div></li>
+        <li><div><a href="https://www.gvm.com.tw/article/130422" target="_blank" rel="noopener">提AI會在畢典被狂噓，黃仁勳演說卻贏得如雷掌聲？</a><div class="source">遠見雜誌</div></div><div class="meta">2026-05-27</div></li>
+        <li><div><a href="https://www.gvm.com.tw/article/129937" target="_blank" rel="noopener">泰勒絲被AI深偽「駭」到怕？申請聲音跟照片商標自保</a><div class="source">遠見雜誌</div></div><div class="meta">2026-05-07</div></li>
+        <li><div><a href="https://www.gvm.com.tw/article/129428" target="_blank" rel="noopener">AI很神但沒那麼神！別把科幻電影當科學真實</a><div class="source">遠見雜誌</div></div><div class="meta">2026-04-16</div></li>
+      </ul>
+
+      <!-- 梅花新聞網 -->
+      <p style="font-weight:600; margin:1.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">梅花新聞網</p>
+      <ul class="article-list">
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/51350" target="_blank" rel="noopener">【張瑞雄專欄】AI狂潮中 理性投資才是王道</a><div class="source">梅花新聞網</div></div><div class="meta">2026-06-24</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/48025" target="_blank" rel="noopener">【張瑞雄專欄】AI聊天機器人成為犯罪幫兇</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04-29</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/47622" target="_blank" rel="noopener">【張瑞雄專欄】蘋果第三個時代 新CEO能否超越傳奇？</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/47245" target="_blank" rel="noopener">【張瑞雄專欄】辜仲諒悄進台泥 究竟是盟友還是敵手？</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/44326" target="_blank" rel="noopener">【張瑞雄專欄】AI治理的兩難困局：當安全成為政治籌碼</a><div class="source">梅花新聞網</div></div><div class="meta">2026-03</div></li>
+      </ul>
+
+      <!-- 風傳媒 -->
+      <p style="font-weight:600; margin:1.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">風傳媒（Storm Media）</p>
+      <ul class="article-list">
+        <li><div><a href="https://www.storm.mg/article/11131063" target="_blank" rel="noopener">張瑞雄觀點：AI把大腦「燒壞」─科技加速人類認知危機</a><div class="source">風傳媒</div></div><div class="meta">2026-05-13</div></li>
+        <li><div><a href="https://www.storm.mg/article/11126267" target="_blank" rel="noopener">張瑞雄觀點：北車商場易主的喧囂</a><div class="source">風傳媒</div></div><div class="meta">2026-04-30</div></li>
+        <li><div><a href="https://www.storm.mg/article/11123917" target="_blank" rel="noopener">張瑞雄觀點：傳承的藝術─從蘋果換帥看企業的永續</a><div class="source">風傳媒</div></div><div class="meta">2026-04-23</div></li>
+        <li><div><a href="https://www.storm.mg/article/11120954" target="_blank" rel="noopener">張瑞雄觀點：川普 vs 教宗─兩套福音的對決？</a><div class="source">風傳媒</div></div><div class="meta">2026-04-14</div></li>
+        <li><div><a href="https://www.storm.mg/article/11117755" target="_blank" rel="noopener">張瑞雄觀點：川普左支右絀、依然嘴硬</a><div class="source">風傳媒</div></div><div class="meta">2026-04-04</div></li>
+      </ul>
+
+      <!-- 台灣醒報 -->
+      <p style="font-weight:600; margin:1.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">台灣醒報</p>
+      <ul class="article-list">
+        <li><div><a href="https://www.anntw.com/articles/20260616-XuOh" target="_blank" rel="noopener">《STEAM專欄》在「台灣無可取代」之前 先確保和平</a><div class="source">台灣醒報</div></div><div class="meta">2026-06-16</div></li>
+        <li><div><a href="https://www.anntw.com/articles/20260524-coAX" target="_blank" rel="noopener">《STEAM專欄》台灣偷走美國的晶片嗎？</a><div class="source">台灣醒報</div></div><div class="meta">2026-05-24</div></li>
+        <li><div><a href="https://anntw.com/articles/20260427-sJ9f" target="_blank" rel="noopener">《STEAM專欄》庫克的收件匣，才是蘋果的戰略地圖</a><div class="source">台灣醒報</div></div><div class="meta">2026-04-27</div></li>
+        <li><div><a href="https://www.anntw.com/articles/20260329-YsOL" target="_blank" rel="noopener">《STEAM專欄》油價補貼的政治誘惑與經濟代價</a><div class="source">台灣醒報</div></div><div class="meta">2026-03-29</div></li>
+        <li><div><a href="https://www.anntw.com/articles/20260315-TfrA" target="_blank" rel="noopener">《STEAM專欄》機器人走進工廠，監管框架沒有跟上</a><div class="source">台灣醒報</div></div><div class="meta">2026-03-15</div></li>
+      </ul>
+
+      <!-- 中國時報 -->
+      <p style="font-weight:600; margin:1.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">中國時報</p>
+      <ul class="article-list">
+        <li><div><a href="https://www.chinatimes.com/opinion/20260619002843-262104" target="_blank" rel="noopener">時論廣場》陳建仁宏圖的背後（張瑞雄）</a><div class="source">中國時報</div></div><div class="meta">2026-06-19</div></li>
+        <li><div><a href="https://www.chinatimes.com/opinion/20260605003980-262104" target="_blank" rel="noopener">時論廣場》建立保障教師制度（張瑞雄）</a><div class="source">中國時報</div></div><div class="meta">2026-06-05</div></li>
+        <li><div><a href="https://www.chinatimes.com/opinion/20260519004107-262104" target="_blank" rel="noopener">時論廣場》賴總統應去黨化（張瑞雄）</a><div class="source">中國時報</div></div><div class="meta">2026-05-19</div></li>
+        <li><div><a href="https://www.chinatimes.com/opinion/20260502002422-262104" target="_blank" rel="noopener">時論廣場》AI的公益靈魂何處尋？（張瑞雄）</a><div class="source">中國時報</div></div><div class="meta">2026-05-02</div></li>
+        <li><div><a href="https://www.chinatimes.com/opinion/20260423004301-262104" target="_blank" rel="noopener">時論廣場》封殺高德依賴LINE 選擇性警覺（張瑞雄）</a><div class="source">中國時報</div></div><div class="meta">2026-04-23</div></li>
+      </ul>
+
+      <!-- 聯合報 -->
+      <p style="font-weight:600; margin:1.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">聯合報</p>
+      <ul class="article-list">
+        <li><div><a href="https://udn.com/news/story/7339/9579763" target="_blank" rel="noopener">無人機國家隊 莫蹈綠能覆轍</a><div class="source">聯合報</div></div><div class="meta">2026-06-22</div></li>
+        <li><div><a href="https://udn.com/news/story/7339/9561475" target="_blank" rel="noopener">那些被拒於球場外的人</a><div class="source">聯合報</div></div><div class="meta">2026-06-12</div></li>
+        <li><div><a href="https://udn.com/news/story/7339/9539460" target="_blank" rel="noopener">民意已說話 政府還要漠視？</a><div class="source">聯合報</div></div><div class="meta">2026-06-02</div></li>
+        <li><div><a href="https://udn.com/news/story/7339/9510780" target="_blank" rel="noopener">勝負從不是歷史天平最重砝碼 彈劾案為憲政史留印記</a><div class="source">聯合報</div></div><div class="meta">2026-05-19</div></li>
+        <li><div><a href="https://udn.com/news/story/7339/9479542" target="_blank" rel="noopener">「借機」出國 考驗正要開始</a><div class="source">聯合報</div></div><div class="meta">2026-05-04</div></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 張瑞雄教授 Prof. Ruay-Shiung Chang &nbsp;|&nbsp; 國立台北商業大學 榮譽講座教授</p>
+  <p style="margin-top:.4rem; font-size:.78rem;">將個人照片命名為 <code>photo.jpg</code> 並置於與本 HTML 檔案相同的目錄下即可顯示。</p>
+</footer>
+
+</body>
+</html>

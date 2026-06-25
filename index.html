@@ -676,6 +676,18 @@
   <section id="media">
     <h2>選錄媒體發表文章（2026）Selected Media Articles</h2>
     <div class="card">
+    <p id="media-updated" style="font-size:.78rem; color:var(--muted); margin-bottom:1rem;">
+      最後更新：<span id="media-updated-date">2026年6月</span>
+      <span id="media-stale-notice" style="display:none; margin-left:.75rem; color:#c0392b; font-weight:600;">⚠ 已超過兩個月，建議更新文章</span>
+    </p>
+    <script>
+      (function(){
+        const updated = new Date(2026, 5, 1); // June 2026 (month is 0-indexed)
+        const now = new Date();
+        const monthsDiff = (now.getFullYear() - updated.getFullYear()) * 12 + (now.getMonth() - updated.getMonth());
+        if (monthsDiff >= 2) document.getElementById('media-stale-notice').style.display = 'inline';
+      })();
+    </script>
 
       <!-- 遠見雜誌 -->
       <p style="font-weight:600; margin:.5rem 0 .5rem; color:var(--primary); font-family:'Noto Sans TC',sans-serif;">遠見雜誌（Global Views Monthly）</p>
@@ -743,7 +755,6 @@
 
 <footer>
   <p>© 2026 張瑞雄教授 Prof. Ruay-Shiung Chang &nbsp;|&nbsp; 國立台北商業大學 榮譽講座教授</p>
-  <p style="margin-top:.4rem; font-size:.78rem;">將個人照片命名為 <code>photo.jpg</code> 並置於與本 HTML 檔案相同的目錄下即可顯示。</p>
 </footer>
 
 <script>

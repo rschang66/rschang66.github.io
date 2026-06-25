@@ -375,14 +375,25 @@
       <h1>張瑞雄 教授</h1>
       <h2>Prof. Ruay-Shiung Chang</h2>
       <p class="tagline">「風聲、雨聲、讀書聲，聲聲入耳；家事、國事、天下事，事事關心。」</p>
-      <p class="contact">
-        ✉ <a href="mailto:rschang@ntub.edu.tw">rschang@ntub.edu.tw</a>
-      </p>
-      <div style="margin-top:1rem; display:inline-block; text-align:center;">
-        <img src="linecode.jpg" alt="Line QR Code" style="width:90px; height:90px; border-radius:6px; border:2px solid rgba(255,255,255,.4); display:block;"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <div style="display:none; width:90px; height:90px; background:rgba(255,255,255,.15); border-radius:6px; line-height:90px; font-size:.75rem; color:rgba(255,255,255,.6);">Line QR</div>
-        <span style="display:block; margin-top:.3rem; font-size:.8rem; color:rgba(255,255,255,.75); letter-spacing:.05em;">Line</span>
+      <!-- Email + Line QR side by side -->
+      <div style="display:flex; align-items:center; gap:1.2rem; margin-top:1.2rem; flex-wrap:wrap;">
+        <p class="contact" style="margin:0;">
+          ✉ <a href="mailto:rschang@ntub.edu.tw">rschang@ntub.edu.tw</a>
+        </p>
+        <div style="display:inline-block; text-align:center;">
+          <img src="linecode.jpg" alt="Line QR Code" style="width:80px; height:80px; border-radius:6px; border:2px solid rgba(255,255,255,.4); display:block;"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display:none; width:80px; height:80px; background:rgba(255,255,255,.15); border-radius:6px; line-height:80px; font-size:.75rem; color:rgba(255,255,255,.6);">Line QR</div>
+          <span style="display:block; margin-top:.25rem; font-size:.78rem; color:rgba(255,255,255,.75); letter-spacing:.05em;">Line</span>
+        </div>
+      </div>
+
+      <!-- Daily Quote -->
+      <div id="daily-quote" style="margin-top:1.4rem; max-width:520px; background:rgba(255,255,255,.1); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:.85rem 1rem;">
+        <div style="font-size:.72rem; font-weight:600; color:rgba(255,255,255,.5); letter-spacing:.08em; margin-bottom:.5rem; text-transform:uppercase;">Daily Quote 每日語錄</div>
+        <div id="dq-zh" style="font-size:.92rem; color:#fff; line-height:1.7; font-family:'Noto Sans TC',sans-serif;"></div>
+        <div id="dq-en" style="font-size:.82rem; color:rgba(255,255,255,.65); line-height:1.6; margin-top:.4rem; font-style:italic;"></div>
+        <div id="dq-author" style="font-size:.78rem; color:var(--accent); margin-top:.5rem; font-weight:600;"></div>
       </div>
     </div>
   </div>
@@ -734,6 +745,88 @@
   <p>© 2026 張瑞雄教授 Prof. Ruay-Shiung Chang &nbsp;|&nbsp; 國立台北商業大學 榮譽講座教授</p>
   <p style="margin-top:.4rem; font-size:.78rem;">將個人照片命名為 <code>photo.jpg</code> 並置於與本 HTML 檔案相同的目錄下即可顯示。</p>
 </footer>
+
+<script>
+(async function() {
+  // Famous people on Wikiquote — picked randomly by date (same quote all day)
+  const people = [
+    { name: 'Albert Einstein',     lang: 'en' },
+    { name: 'Winston Churchill',   lang: 'en' },
+    { name: 'Mahatma Gandhi',      lang: 'en' },
+    { name: 'Steve Jobs',          lang: 'en' },
+    { name: 'Abraham Lincoln',     lang: 'en' },
+    { name: 'Mark Twain',          lang: 'en' },
+    { name: 'Oscar Wilde',         lang: 'en' },
+    { name: 'Benjamin Franklin',   lang: 'en' },
+    { name: 'Aristotle',           lang: 'en' },
+    { name: 'Socrates',            lang: 'en' },
+    { name: 'Confucius',           lang: 'en' },
+    { name: 'Stephen Hawking',     lang: 'en' },
+    { name: 'Nelson Mandela',      lang: 'en' },
+    { name: 'Martin Luther King Jr.', lang: 'en' },
+    { name: 'Theodore Roosevelt',  lang: 'en' },
+    { name: 'Thomas Edison',       lang: 'en' },
+    { name: 'Charles Darwin',      lang: 'en' },
+    { name: 'Isaac Newton',        lang: 'en' },
+    { name: 'Bertrand Russell',    lang: 'en' },
+    { name: 'George Bernard Shaw', lang: 'en' },
+    { name: 'Friedrich Nietzsche', lang: 'en' },
+    { name: 'Voltaire',            lang: 'en' },
+    { name: 'Ralph Waldo Emerson', lang: 'en' },
+    { name: 'Henry David Thoreau', lang: 'en' },
+    { name: 'Carl Sagan',          lang: 'en' },
+    { name: 'Richard Feynman',     lang: 'en' },
+    { name: 'Marie Curie',         lang: 'en' },
+    { name: 'Leonardo da Vinci',   lang: 'en' },
+    { name: 'Winston Churchill',   lang: 'en' },
+    { name: 'Lao Tzu',             lang: 'en' },
+  ];
+
+  const person = people[Math.floor(Math.random() * people.length)];
+
+  try {
+    // Fetch wikitext from Wikiquote
+    const apiUrl = `https://en.wikiquote.org/w/api.php?action=parse&page=${encodeURIComponent(person.name)}&prop=wikitext&format=json&origin=*`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+    const wikitext = data?.parse?.wikitext?.['*'] || '';
+
+    // Extract quoted lines: * "quote" or *"quote"
+    const quoteRegex = /^\*\s*[""«]([^"""»\n]{30,280})[""»]/gm;
+    const matches = [...wikitext.matchAll(quoteRegex)];
+    if (!matches.length) throw new Error('no quotes');
+
+    // Pick a quote based on date seed
+    const quote = matches[Math.floor(Math.random() * matches.length)][1].trim();
+
+    // Translate to Traditional Chinese via Google Translate (no API key required)
+    let zhText = '';
+    try {
+      const tRes = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(quote)}`);
+      const tData = await tRes.json();
+      zhText = tData[0].map(seg => seg[0]).join('');
+    } catch(_) {}
+
+    document.getElementById('dq-zh').textContent = zhText || quote;
+    document.getElementById('dq-en').textContent = zhText ? quote : '';
+    document.getElementById('dq-author').textContent = '— ' + person.name;
+
+  } catch(e) {
+    // Fallback: static curated quotes
+    const fallback = [
+      { zh: '想像力比知識更重要。知識是有限的，而想像力環抱整個世界。', en: 'Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.', author: 'Albert Einstein' },
+      { zh: '成功不是終點，失敗也並非末日，繼續前行的勇氣才最重要。', en: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
+      { zh: '成為你希望在這個世界上看到的改變。', en: 'Be the change you wish to see in the world.', author: 'Mahatma Gandhi' },
+      { zh: '要像明天就會死去那樣活著，要像永遠不會死去那樣學習。', en: 'Live as if you were to die tomorrow. Learn as if you were to live forever.', author: 'Mahatma Gandhi' },
+      { zh: '求知若飢，虛心若愚。', en: 'Stay hungry, stay foolish.', author: 'Steve Jobs' },
+    ];
+    const f = fallback[Math.floor(Math.random() * fallback.length)];
+    document.getElementById('dq-zh').textContent = f.zh;
+    document.getElementById('dq-en').textContent = f.en;
+    document.getElementById('dq-author').textContent = '— ' + f.author;
+  }
+})();
+</script>
 
 </body>
 </html>

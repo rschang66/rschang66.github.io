@@ -405,7 +405,7 @@
   <section id="about">
     <h2>個人簡介</h2>
     <div class="card">
-      <p>張瑞雄教授於1980年自國立臺灣大學電機工程學系畢業，1988年取得國立清華大學資訊與決策科學研究所博士學位。歷任中山科學研究院研究科學家、國立臺灣科技大學教授、國立東華大學副校長、台灣觀光學院校長，並於2014年至2022年間擔任國立臺北商業大學校長，任內致力將資訊與通訊科技引入商業教育，使北商大躋身臺灣頂尖技職大學之列。</p>
+      <p>張瑞雄教授於1980年自國立臺灣大學電機工程學系畢業，1988年取得國立清華大學計算機管理決策研究所博士學位。歷任中山科學研究院研究科學家、國立臺灣科技大學教授、國立東華大學副校長、台灣觀光學院校長，並於2014年至2022年間擔任國立臺北商業大學校長，任內致力將資訊與通訊科技引入商業教育，使北商大躋身臺灣頂尖技職大學之列。</p>
       <br>
       <p>張教授研究領域涵蓋人工智慧、雲端計算與社群網路，曾指導超過50名碩士生及10名博士生，並在國際期刊與會議上發表眾多論文。現任台北商業大學榮譽講座教授，同時擔任叡揚資訊顧問及多項公私部門諮詢職務，並長期為遠見雜誌、梅花新聞網撰寫科技評論專欄。</p>
     </div>
@@ -748,77 +748,69 @@
 
 <script>
 (async function() {
-  // Famous people on Wikiquote — picked randomly by date (same quote all day)
-  const people = [
-    { name: 'Albert Einstein',     lang: 'en' },
-    { name: 'Winston Churchill',   lang: 'en' },
-    { name: 'Mahatma Gandhi',      lang: 'en' },
-    { name: 'Steve Jobs',          lang: 'en' },
-    { name: 'Abraham Lincoln',     lang: 'en' },
-    { name: 'Mark Twain',          lang: 'en' },
-    { name: 'Oscar Wilde',         lang: 'en' },
-    { name: 'Benjamin Franklin',   lang: 'en' },
-    { name: 'Aristotle',           lang: 'en' },
-    { name: 'Socrates',            lang: 'en' },
-    { name: 'Confucius',           lang: 'en' },
-    { name: 'Stephen Hawking',     lang: 'en' },
-    { name: 'Nelson Mandela',      lang: 'en' },
-    { name: 'Martin Luther King Jr.', lang: 'en' },
-    { name: 'Theodore Roosevelt',  lang: 'en' },
-    { name: 'Thomas Edison',       lang: 'en' },
-    { name: 'Charles Darwin',      lang: 'en' },
-    { name: 'Isaac Newton',        lang: 'en' },
-    { name: 'Bertrand Russell',    lang: 'en' },
-    { name: 'George Bernard Shaw', lang: 'en' },
-    { name: 'Friedrich Nietzsche', lang: 'en' },
-    { name: 'Voltaire',            lang: 'en' },
-    { name: 'Ralph Waldo Emerson', lang: 'en' },
-    { name: 'Henry David Thoreau', lang: 'en' },
-    { name: 'Carl Sagan',          lang: 'en' },
-    { name: 'Richard Feynman',     lang: 'en' },
-    { name: 'Marie Curie',         lang: 'en' },
-    { name: 'Leonardo da Vinci',   lang: 'en' },
-    { name: 'Winston Churchill',   lang: 'en' },
-    { name: 'Lao Tzu',             lang: 'en' },
+  // BrainyQuote topic pages — randomly selected each visit
+  const topics = [
+    'wisdom', 'motivational', 'inspirational', 'knowledge',
+    'science', 'technology', 'education', 'life', 'success',
+    'learning', 'imagination', 'intelligence', 'innovation',
+    'leadership', 'perseverance', 'change', 'courage', 'truth',
   ];
 
-  const person = people[Math.floor(Math.random() * people.length)];
+  const topic = topics[Math.floor(Math.random() * topics.length)];
+  const targetUrl = `https://www.brainyquote.com/topics/${topic}-quotes`;
+  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
 
   try {
-    // Fetch wikitext from Wikiquote
-    const apiUrl = `https://en.wikiquote.org/w/api.php?action=parse&page=${encodeURIComponent(person.name)}&prop=wikitext&format=json&origin=*`;
-    const res = await fetch(apiUrl);
+    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) throw new Error('proxy failed');
     const data = await res.json();
-    const wikitext = data?.parse?.wikitext?.['*'] || '';
+    const html = data.contents;
+    if (!html) throw new Error('empty response');
 
-    // Extract quoted lines: * "quote" or *"quote"
-    const quoteRegex = /^\*\s*[""«]([^"""»\n]{30,280})[""»]/gm;
-    const matches = [...wikitext.matchAll(quoteRegex)];
-    if (!matches.length) throw new Error('no quotes');
+    // Parse the fetched HTML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
 
-    // Pick a quote based on date seed
-    const quote = matches[Math.floor(Math.random() * matches.length)][1].trim();
+    // BrainyQuote stores quote text in <a class="b-qt"> and authors in <a class="bq-aut">
+    const quoteEls  = doc.querySelectorAll('a.b-qt');
+    const authorEls = doc.querySelectorAll('a.bq-aut');
 
-    // Translate to Traditional Chinese via Google Translate (no API key required)
+    const quotes = [];
+    quoteEls.forEach((el, i) => {
+      const text   = (el.getAttribute('title') || el.textContent || '').trim();
+      const author = (authorEls[i]?.textContent || '').trim();
+      if (text.length > 20 && author) quotes.push({ text, author });
+    });
+
+    if (!quotes.length) throw new Error('no quotes parsed');
+
+    const selected = quotes[Math.floor(Math.random() * quotes.length)];
+
+    // Translate to Traditional Chinese via Google Translate
     let zhText = '';
     try {
-      const tRes = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(quote)}`);
+      const tRes = await fetch(
+        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(selected.text)}`,
+        { signal: AbortSignal.timeout(6000) }
+      );
       const tData = await tRes.json();
       zhText = tData[0].map(seg => seg[0]).join('');
     } catch(_) {}
 
-    document.getElementById('dq-zh').textContent = zhText || quote;
-    document.getElementById('dq-en').textContent = zhText ? quote : '';
-    document.getElementById('dq-author').textContent = '— ' + person.name;
+    document.getElementById('dq-zh').textContent = zhText || selected.text;
+    document.getElementById('dq-en').textContent = zhText ? selected.text : '';
+    document.getElementById('dq-author').textContent = '— ' + selected.author;
 
   } catch(e) {
-    // Fallback: static curated quotes
+    // Fallback: curated quotes
     const fallback = [
       { zh: '想像力比知識更重要。知識是有限的，而想像力環抱整個世界。', en: 'Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.', author: 'Albert Einstein' },
       { zh: '成功不是終點，失敗也並非末日，繼續前行的勇氣才最重要。', en: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
       { zh: '成為你希望在這個世界上看到的改變。', en: 'Be the change you wish to see in the world.', author: 'Mahatma Gandhi' },
       { zh: '要像明天就會死去那樣活著，要像永遠不會死去那樣學習。', en: 'Live as if you were to die tomorrow. Learn as if you were to live forever.', author: 'Mahatma Gandhi' },
       { zh: '求知若飢，虛心若愚。', en: 'Stay hungry, stay foolish.', author: 'Steve Jobs' },
+      { zh: '生命中唯一確定的事，就是沒有什麼是確定的。', en: 'The only certainty in life is that nothing is certain.', author: 'Pliny the Elder' },
+      { zh: '偉大的事業是由一系列的小事累積而成的。', en: 'Great things are done by a series of small things brought together.', author: 'Vincent van Gogh' },
     ];
     const f = fallback[Math.floor(Math.random() * fallback.length)];
     document.getElementById('dq-zh').textContent = f.zh;

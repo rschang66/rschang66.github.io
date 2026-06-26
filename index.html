@@ -704,9 +704,9 @@
       <ul class="article-list">
         <li><div><a href="https://www.i-meihua.com/Article/Detail/51350" target="_blank" rel="noopener">【張瑞雄專欄】AI狂潮中 理性投資才是王道</a><div class="source">梅花新聞網</div></div><div class="meta">2026-06-24</div></li>
         <li><div><a href="https://www.i-meihua.com/Article/Detail/48025" target="_blank" rel="noopener">【張瑞雄專欄】AI聊天機器人成為犯罪幫兇</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04-29</div></li>
-        <li><div><a href="https://www.i-meihua.com/Article/Detail/47622" target="_blank" rel="noopener">【張瑞雄專欄】蘋果第三個時代 新CEO能否超越傳奇？</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04</div></li>
-        <li><div><a href="https://www.i-meihua.com/Article/Detail/47245" target="_blank" rel="noopener">【張瑞雄專欄】辜仲諒悄進台泥 究竟是盟友還是敵手？</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04</div></li>
-        <li><div><a href="https://www.i-meihua.com/Article/Detail/44326" target="_blank" rel="noopener">【張瑞雄專欄】AI治理的兩難困局：當安全成為政治籌碼</a><div class="source">梅花新聞網</div></div><div class="meta">2026-03</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/47622" target="_blank" rel="noopener">【張瑞雄專欄】蘋果第三個時代 新CEO能否超越傳奇？</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04-22</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/47245" target="_blank" rel="noopener">【張瑞雄專欄】辜仲諒悄進台泥 究竟是盟友還是敵手？</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04-15</div></li>
+        <li><div><a href="https://www.i-meihua.com/Article/Detail/46806" target="_blank" rel="noopener">【張瑞雄專欄】太空中 人類最深最遠的凝望</a><div class="source">梅花新聞網</div></div><div class="meta">2026-04-08</div></li>
       </ul>
 
       <!-- 風傳媒 -->
@@ -755,6 +755,10 @@
 
 <footer>
   <p>© 2026 張瑞雄教授 Prof. Ruay-Shiung Chang &nbsp;|&nbsp; 國立台北商業大學 榮譽講座教授</p>
+  <p style="margin-top:.75rem;">
+    <span style="color:rgba(255,255,255,.55); font-size:.85rem; vertical-align:middle;">訪客人數 &nbsp;</span><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Frschang66.github.io&count_bg=%231a3a5c&title_bg=%23334e6e&icon=eye.svg&icon_color=%23ffffff&title=&edge_flat=true"
+         alt="" style="height:22px; vertical-align:middle;">
+  </p>
 </footer>
 
 <script>
@@ -769,7 +773,14 @@
 
   const topic = topics[Math.floor(Math.random() * topics.length)];
   const targetUrl = `https://www.brainyquote.com/topics/${topic}-quotes`;
-  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+  // Add cache-busting timestamp so allorigins.win doesn't return stale cached content
+  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}&t=${Date.now()}`;
+
+  // Load quote history from localStorage to avoid repeats
+  const HISTORY_KEY = 'dq-seen';
+  const MAX_HISTORY = 20;
+  let seen = [];
+  try { seen = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(_) {}
 
   try {
     const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
@@ -795,7 +806,14 @@
 
     if (!quotes.length) throw new Error('no quotes parsed');
 
-    const selected = quotes[Math.floor(Math.random() * quotes.length)];
+    // Prefer quotes not seen recently; fall back to full pool if all seen
+    const unseen = quotes.filter(q => !seen.includes(q.text.slice(0, 60)));
+    const pool = unseen.length > 0 ? unseen : quotes;
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+
+    // Update history
+    seen = [...seen, selected.text.slice(0, 60)].slice(-MAX_HISTORY);
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(seen)); } catch(_) {}
 
     // Translate to Traditional Chinese via Google Translate
     let zhText = '';

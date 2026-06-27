@@ -14,6 +14,8 @@
   <meta name="author" content="Prof. Ruay-Shiung Chang (張瑞雄)">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://ruayshiungchang.github.io/">
+  <link rel="icon" type="image/jpeg" href="photo.jpg">
+  <link rel="apple-touch-icon" href="photo.jpg">
 
   <!-- SEO: Open Graph -->
   <meta property="og:type" content="profile">
@@ -756,14 +758,9 @@
 <footer>
   <p>© 2026 張瑞雄教授 Prof. Ruay-Shiung Chang &nbsp;|&nbsp; 國立台北商業大學 榮譽講座教授</p>
   <p style="margin-top:.75rem;">
-    <span style="color:rgba(255,255,255,.55); font-size:.85rem;">訪客人數 &nbsp;</span><span id="visit-count" style="color:#fff; font-size:.95rem; font-weight:600;">…</span>
+    <span style="color:rgba(255,255,255,.55); font-size:.85rem;">訪客人數 &nbsp;</span><span id="busuanzi_value_site_pv" style="color:#fff; font-size:.95rem; font-weight:600;"></span>
   </p>
-  <script>
-    fetch('https://api.countapi.xyz/hit/prof-chang-ntub/visits')
-      .then(r => r.json())
-      .then(d => { document.getElementById('visit-count').textContent = Number(d.value).toLocaleString(); })
-      .catch(() => { document.getElementById('visit-count').textContent = ''; });
-  </script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </footer>
 
 <script>

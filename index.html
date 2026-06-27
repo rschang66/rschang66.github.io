@@ -759,88 +759,18 @@
     <span style="color:rgba(255,255,255,.55); font-size:.85rem;">訪客人數 &nbsp;</span><span id="visit-count" style="color:#fff; font-size:.95rem; font-weight:600;">…</span>
   </p>
   <script>
-    fetch('https://api.counterapi.dev/v1/prof-chang-website/visits/up')
+    fetch('https://api.countapi.xyz/hit/prof-chang-ntub/visits')
       .then(r => r.json())
-      .then(d => { document.getElementById('visit-count').textContent = Number(d.count).toLocaleString(); })
+      .then(d => { document.getElementById('visit-count').textContent = Number(d.value).toLocaleString(); })
       .catch(() => { document.getElementById('visit-count').textContent = ''; });
   </script>
 </footer>
 
 <script>
 (async function() {
-  // BrainyQuote topic pages — randomly selected each visit
-  const topics = [
-    'wisdom', 'motivational', 'inspirational', 'knowledge',
-    'science', 'technology', 'education', 'life', 'success',
-    'learning', 'imagination', 'intelligence', 'innovation',
-    'leadership', 'perseverance', 'change', 'courage', 'truth',
-  ];
-
-  // Generate two independent random numbers: one for topic, one for page (1–8)
-  const randTopic = Math.floor(Math.random() * topics.length);
-  const randPage  = Math.floor(Math.random() * 8) + 1;   // pages 1–8
-  const topic = topics[randTopic];
-  const pageSuffix = randPage > 1 ? `_${randPage}` : '';
-  const targetUrl = `https://www.brainyquote.com/topics/${topic}-quotes${pageSuffix}`;
-  // Cache-bust so proxy always fetches fresh content
-  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}&t=${Date.now()}`;
-
-  // Load quote history from localStorage to avoid repeats
-  const HISTORY_KEY = 'dq-seen';
-  const MAX_HISTORY = 20;
-  let seen = [];
-  try { seen = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(_) {}
-
-  try {
-    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
-    if (!res.ok) throw new Error('proxy failed');
-    const data = await res.json();
-    const html = data.contents;
-    if (!html) throw new Error('empty response');
-
-    // Parse the fetched HTML
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-
-    // BrainyQuote stores quote text in <a class="b-qt"> and authors in <a class="bq-aut">
-    const quoteEls  = doc.querySelectorAll('a.b-qt');
-    const authorEls = doc.querySelectorAll('a.bq-aut');
-
-    const quotes = [];
-    quoteEls.forEach((el, i) => {
-      const text   = (el.getAttribute('title') || el.textContent || '').trim();
-      const author = (authorEls[i]?.textContent || '').trim();
-      if (text.length > 20 && author) quotes.push({ text, author });
-    });
-
-    if (!quotes.length) throw new Error('no quotes parsed');
-
-    // Prefer quotes not seen recently; fall back to full pool if all seen
-    const unseen = quotes.filter(q => !seen.includes(q.text.slice(0, 60)));
-    const pool = unseen.length > 0 ? unseen : quotes;
-    const selected = pool[Math.floor(Math.random() * pool.length)];
-
-    // Update history
-    seen = [...seen, selected.text.slice(0, 60)].slice(-MAX_HISTORY);
-    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(seen)); } catch(_) {}
-
-    // Translate to Traditional Chinese via Google Translate
-    let zhText = '';
-    try {
-      const tRes = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(selected.text)}`,
-        { signal: AbortSignal.timeout(6000) }
-      );
-      const tData = await tRes.json();
-      zhText = tData[0].map(seg => seg[0]).join('');
-    } catch(_) {}
-
-    document.getElementById('dq-zh').textContent = zhText || selected.text;
-    document.getElementById('dq-en').textContent = zhText ? selected.text : '';
-    document.getElementById('dq-author').textContent = '— ' + selected.author;
-
-  } catch(e) {
-    // Fallback: curated quotes
+  // Use quotable.io — a free, CORS-enabled quote API that returns a fresh random quote every call
+  // No scraping, no proxy, no caching issues.
+  async function showFallback() {
     const fallback = [
       { zh: '想像力比知識更重要。知識是有限的，而想像力環抱整個世界。', en: 'Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.', author: 'Albert Einstein' },
       { zh: '成功不是終點，失敗也並非末日，繼續前行的勇氣才最重要。', en: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
@@ -854,6 +784,32 @@
     document.getElementById('dq-zh').textContent = f.zh;
     document.getElementById('dq-en').textContent = f.en;
     document.getElementById('dq-author').textContent = '— ' + f.author;
+  }
+
+  try {
+    // quotable.io returns a truly random quote from its database of 1,500+ quotes
+    const res = await fetch('https://api.quotable.io/random', { signal: AbortSignal.timeout(6000) });
+    if (!res.ok) throw new Error('quotable failed');
+    const q = await res.json();
+    // q.content = quote text (English), q.author = author name
+
+    // Translate to Traditional Chinese
+    let zhText = '';
+    try {
+      const tRes = await fetch(
+        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(q.content)}`,
+        { signal: AbortSignal.timeout(6000) }
+      );
+      const tData = await tRes.json();
+      zhText = tData[0].map(seg => seg[0]).join('');
+    } catch(_) {}
+
+    document.getElementById('dq-zh').textContent = zhText || q.content;
+    document.getElementById('dq-en').textContent = zhText ? q.content : '';
+    document.getElementById('dq-author').textContent = '— ' + q.author;
+
+  } catch(e) {
+    await showFallback();
   }
 })();
 </script>

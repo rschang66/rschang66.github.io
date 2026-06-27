@@ -768,48 +768,101 @@
 
 <script>
 (async function() {
-  // Use quotable.io — a free, CORS-enabled quote API that returns a fresh random quote every call
-  // No scraping, no proxy, no caching issues.
-  async function showFallback() {
-    const fallback = [
-      { zh: '想像力比知識更重要。知識是有限的，而想像力環抱整個世界。', en: 'Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.', author: 'Albert Einstein' },
-      { zh: '成功不是終點，失敗也並非末日，繼續前行的勇氣才最重要。', en: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
-      { zh: '成為你希望在這個世界上看到的改變。', en: 'Be the change you wish to see in the world.', author: 'Mahatma Gandhi' },
-      { zh: '要像明天就會死去那樣活著，要像永遠不會死去那樣學習。', en: 'Live as if you were to die tomorrow. Learn as if you were to live forever.', author: 'Mahatma Gandhi' },
-      { zh: '求知若飢，虛心若愚。', en: 'Stay hungry, stay foolish.', author: 'Steve Jobs' },
-      { zh: '生命中唯一確定的事，就是沒有什麼是確定的。', en: 'The only certainty in life is that nothing is certain.', author: 'Pliny the Elder' },
-      { zh: '偉大的事業是由一系列的小事累積而成的。', en: 'Great things are done by a series of small things brought together.', author: 'Vincent van Gogh' },
-    ];
-    const f = fallback[Math.floor(Math.random() * fallback.length)];
-    document.getElementById('dq-zh').textContent = f.zh;
-    document.getElementById('dq-en').textContent = f.en;
-    document.getElementById('dq-author').textContent = '— ' + f.author;
+  // ── Embedded quote pool (40 quotes, pre-translated) ────────────────────────
+  // Used as fallback when the API is unavailable, ensuring rich variety always.
+  const POOL = [
+    {id:1,  zh:'想像力比知識更重要。知識是有限的，而想像力環抱整個世界。', en:'Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.', author:'Albert Einstein'},
+    {id:2,  zh:'成功不是終點，失敗也並非末日，繼續前行的勇氣才最重要。', en:'Success is not final, failure is not fatal: it is the courage to continue that counts.', author:'Winston Churchill'},
+    {id:3,  zh:'成為你希望在這個世界上看到的改變。', en:'Be the change you wish to see in the world.', author:'Mahatma Gandhi'},
+    {id:4,  zh:'要像明天就會死去那樣活著，要像永遠不會死去那樣學習。', en:'Live as if you were to die tomorrow. Learn as if you were to live forever.', author:'Mahatma Gandhi'},
+    {id:5,  zh:'求知若飢，虛心若愚。', en:'Stay hungry, stay foolish.', author:'Steve Jobs'},
+    {id:6,  zh:'偉大的事業是由一系列的小事累積而成的。', en:'Great things are done by a series of small things brought together.', author:'Vincent van Gogh'},
+    {id:7,  zh:'教育是點燃火焰，而非填滿容器。', en:'Education is not the filling of a pail, but the lighting of a fire.', author:'W. B. Yeats'},
+    {id:8,  zh:'告訴我，我會忘記；教導我，我可能記住；讓我參與，我將學會。', en:'Tell me and I forget. Teach me and I remember. Involve me and I learn.', author:'Benjamin Franklin'},
+    {id:9,  zh:'在資訊時代，最大的障礙不是獲取知識，而是學會如何過濾資訊。', en:'The illiterate of the 21st century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn.', author:'Alvin Toffler'},
+    {id:10, zh:'科學的目標是盡可能少用幾個假設來解釋最廣泛的現象。', en:'The aim of science is to seek the simplest explanations of complex facts.', author:'Alfred North Whitehead'},
+    {id:11, zh:'我們面對的困難，不過是通往奇妙機遇的前奏。', en:'In the middle of every difficulty lies opportunity.', author:'Albert Einstein'},
+    {id:12, zh:'如果你無法向一個六歲的孩子解釋，你自己也還沒真正理解。', en:'If you can\'t explain it simply, you don\'t understand it well enough.', author:'Albert Einstein'},
+    {id:13, zh:'知識本身就是力量。', en:'Knowledge is power.', author:'Francis Bacon'},
+    {id:14, zh:'我們對宇宙的無知，恰恰是好奇心的養分。', en:'The important thing is not to stop questioning. Curiosity has its own reason for existing.', author:'Albert Einstein'},
+    {id:15, zh:'生命的意義在於找到自己的天賦，生命的目的在於將它給予世界。', en:'The meaning of life is to find your gift. The purpose of life is to give it away.', author:'Pablo Picasso'},
+    {id:16, zh:'未來屬於那些相信自己夢想之美的人。', en:'The future belongs to those who believe in the beauty of their dreams.', author:'Eleanor Roosevelt'},
+    {id:17, zh:'你不必偉大才能起步，但你必須起步才能偉大。', en:'You don\'t have to be great to start, but you have to start to be great.', author:'Zig Ziglar'},
+    {id:18, zh:'唯一不可能的旅程，是你從未出發的那一趟。', en:'The only impossible journey is the one you never begin.', author:'Tony Robbins'},
+    {id:19, zh:'昨天是歷史，明天是謎題，今天是禮物——這就是為什麼我們稱它為「當下」。', en:'Yesterday is history, tomorrow is a mystery, today is a gift of God, which is why we call it the present.', author:'Bill Keane'},
+    {id:20, zh:'改變思維，你就能改變世界。', en:'Change your thoughts and you change your world.', author:'Norman Vincent Peale'},
+    {id:21, zh:'人工智慧是新的電力。', en:'AI is the new electricity.', author:'Andrew Ng'},
+    {id:22, zh:'技術本身不重要，重要的是你對人的信念、對進步的熱情、以及改變世界的意願。', en:'Technology is nothing. What\'s important is that you have a faith in people, that they\'re basically good and smart, and if you give them tools, they\'ll do wonderful things with them.', author:'Steve Jobs'},
+    {id:23, zh:'創新是把領導力和追隨力區分開來的關鍵。', en:'Innovation distinguishes between a leader and a follower.', author:'Steve Jobs'},
+    {id:24, zh:'學習永遠不會讓心靈疲憊。', en:'Learning never exhausts the mind.', author:'Leonardo da Vinci'},
+    {id:25, zh:'把自己的一生視為一個持續學習的旅程。', en:'Live as if you were to die tomorrow. Learn as if you were to live forever.', author:'Mahatma Gandhi'},
+    {id:26, zh:'我們所見到的宇宙，不過是更宏偉宇宙的一個角落。', en:'The universe is under no obligation to make sense to you.', author:'Neil deGrasse Tyson'},
+    {id:27, zh:'智慧不是學校教育的結果，而是終身努力的結晶。', en:'Wisdom is not a product of schooling but of the lifelong attempt to acquire it.', author:'Albert Einstein'},
+    {id:28, zh:'真正的天才，是在複雜中找到簡單。', en:'Simplicity is the ultimate sophistication.', author:'Leonardo da Vinci'},
+    {id:29, zh:'沒有什麼比知識傳播更強大的力量。', en:'An investment in knowledge pays the best interest.', author:'Benjamin Franklin'},
+    {id:30, zh:'孤獨讓思想有機會成長。', en:'Without great solitude, no serious work is possible.', author:'Pablo Picasso'},
+    {id:31, zh:'我們的命運不是由星辰決定，而是由我們自己決定。', en:'The fault, dear Brutus, is not in our stars, but in ourselves.', author:'William Shakespeare'},
+    {id:32, zh:'失敗只不過是以更聰明的方式重新開始的機會。', en:'Failure is simply the opportunity to begin again, this time more intelligently.', author:'Henry Ford'},
+    {id:33, zh:'懷疑是智慧的開始。', en:'The beginning of wisdom is found in doubting.', author:'Pierre Abélard'},
+    {id:34, zh:'閱讀使人充實，討論使人敏捷，書寫使人精確。', en:'Reading maketh a full man; conference a ready man; and writing an exact man.', author:'Francis Bacon'},
+    {id:35, zh:'完美是卓越的敵人。', en:'Perfect is the enemy of good.', author:'Voltaire'},
+    {id:36, zh:'心靈不是需要填滿的容器，而是需要點燃的火焰。', en:'The mind is not a vessel to be filled, but a fire to be kindled.', author:'Plutarch'},
+    {id:37, zh:'若你以為自己做不到，或者做得到，你都是對的。', en:'Whether you think you can or you think you can\'t, you\'re right.', author:'Henry Ford'},
+    {id:38, zh:'所有的成就都始於敢於嘗試的決定。', en:'All our dreams can come true, if we have the courage to pursue them.', author:'Walt Disney'},
+    {id:39, zh:'科學是有組織的知識，智慧是有組織的生活。', en:'Science is organized knowledge. Wisdom is organized life.', author:'Immanuel Kant'},
+    {id:40, zh:'世界上只有一種真正的英雄主義，那就是在看清生活的真相後依然熱愛它。', en:'There is only one heroism in the world: to see the world as it is, and to love it.', author:'Romain Rolland'},
+  ];
+
+  // ── localStorage history to prevent repeats ─────────────────────────────────
+  const HISTORY_KEY = 'dq-seen-v3';
+  const MAX_HISTORY = 35; // remember last 35 so the 40-pool stays fresh
+  let seen = [];
+  try { seen = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(_) {}
+
+  function saveHistory(id) {
+    seen = [...seen, id].slice(-MAX_HISTORY);
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(seen)); } catch(_) {}
   }
 
+  function pickFromPool() {
+    const unseen = POOL.filter(q => !seen.includes(q.id));
+    const candidates = unseen.length > 0 ? unseen : POOL;
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  }
+
+  function display(zh, en, author) {
+    document.getElementById('dq-zh').textContent = zh;
+    document.getElementById('dq-en').textContent = en;
+    document.getElementById('dq-author').textContent = '— ' + author;
+  }
+
+  async function translateEN(text) {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    const data = await res.json();
+    return data[0].map(s => s[0]).join('');
+  }
+
+  // ── Try live API first (cache-busted) ────────────────────────────────────────
   try {
-    // quotable.io returns a truly random quote from its database of 1,500+ quotes
-    const res = await fetch('https://api.quotable.io/random', { signal: AbortSignal.timeout(6000) });
-    if (!res.ok) throw new Error('quotable failed');
+    const res = await fetch(
+      `https://api.quotable.io/random?_=${Date.now()}`,
+      { cache: 'no-store', signal: AbortSignal.timeout(6000) }
+    );
+    if (!res.ok) throw new Error('API failed');
     const q = await res.json();
-    // q.content = quote text (English), q.author = author name
+    if (!q.content || !q.author) throw new Error('bad response');
 
-    // Translate to Traditional Chinese
-    let zhText = '';
-    try {
-      const tRes = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(q.content)}`,
-        { signal: AbortSignal.timeout(6000) }
-      );
-      const tData = await tRes.json();
-      zhText = tData[0].map(seg => seg[0]).join('');
-    } catch(_) {}
+    let zh = '';
+    try { zh = await translateEN(q.content); } catch(_) {}
 
-    document.getElementById('dq-zh').textContent = zhText || q.content;
-    document.getElementById('dq-en').textContent = zhText ? q.content : '';
-    document.getElementById('dq-author').textContent = '— ' + q.author;
-
-  } catch(e) {
-    await showFallback();
+    display(zh || q.content, zh ? q.content : '', q.author);
+    // No id to save for live quotes, just record snippet to avoid re-fetch duplication
+  } catch(_) {
+    // ── Fallback: pick from embedded pool, avoiding recently seen ─────────────
+    const q = pickFromPool();
+    saveHistory(q.id);
+    display(q.zh, q.en, q.author);
   }
 })();
 </script>

@@ -756,9 +756,14 @@
 <footer>
   <p>© 2026 張瑞雄教授 Prof. Ruay-Shiung Chang &nbsp;|&nbsp; 國立台北商業大學 榮譽講座教授</p>
   <p style="margin-top:.75rem;">
-    <span style="color:rgba(255,255,255,.55); font-size:.85rem; vertical-align:middle;">訪客人數 &nbsp;</span><img src="https://visitor-badge.laobi.icu/badge?page_id=rschang66.prof-chang-website&left_color=%23334e6e&right_color=%231a3a5c&left_text="
-         alt="" style="height:22px; vertical-align:middle;">
+    <span style="color:rgba(255,255,255,.55); font-size:.85rem;">訪客人數 &nbsp;</span><span id="visit-count" style="color:#fff; font-size:.95rem; font-weight:600;">…</span>
   </p>
+  <script>
+    fetch('https://api.counterapi.dev/v1/prof-chang-website/visits/up')
+      .then(r => r.json())
+      .then(d => { document.getElementById('visit-count').textContent = Number(d.count).toLocaleString(); })
+      .catch(() => { document.getElementById('visit-count').textContent = ''; });
+  </script>
 </footer>
 
 <script>
@@ -771,9 +776,13 @@
     'leadership', 'perseverance', 'change', 'courage', 'truth',
   ];
 
-  const topic = topics[Math.floor(Math.random() * topics.length)];
-  const targetUrl = `https://www.brainyquote.com/topics/${topic}-quotes`;
-  // Add cache-busting timestamp so allorigins.win doesn't return stale cached content
+  // Generate two independent random numbers: one for topic, one for page (1–8)
+  const randTopic = Math.floor(Math.random() * topics.length);
+  const randPage  = Math.floor(Math.random() * 8) + 1;   // pages 1–8
+  const topic = topics[randTopic];
+  const pageSuffix = randPage > 1 ? `_${randPage}` : '';
+  const targetUrl = `https://www.brainyquote.com/topics/${topic}-quotes${pageSuffix}`;
+  // Cache-bust so proxy always fetches fresh content
   const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}&t=${Date.now()}`;
 
   // Load quote history from localStorage to avoid repeats
